@@ -1,8 +1,5 @@
 Sybil_Joulin
 
-Jean-Marie_Betizaux
-Paul_Betizaux
-Christophe_Lespingal
 Camille_Betizaux
 Magali_Capdelaire
 Julie_Lespingal
@@ -11,3 +8,4 @@ Marion_Betizaux
 Annie_Betizaux
 Florence_Lespingal
 Fiona
+Jean-Marie_Betizaux
