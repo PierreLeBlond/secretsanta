@@ -36,15 +36,18 @@ func findPartitions(partition []*list.List, circuits []*list.List, length int, m
   newCircuit := circuits[0];
   newLength := length + newCircuit.Len();
   if newLength <= max && isDisjoinctFromPartition(newCircuit, partition) {
-    newPartition := append(partition, newCircuit);
     if newLength == max {
+      newPartition := append(partition, newCircuit);
+      // This is needed to prevent bugs I do not understand yet
+      newPartition = append([]*list.List(nil), newPartition...);
       partitions = append(partitions, newPartition);
     } else {
+      newPartition := append(partition, newCircuit);
       newPartitions := findPartitions(newPartition, circuits[1:], newLength, max);
       partitions = append(partitions, newPartitions...);
     }
   }
-  newPartitions := findPartitions(partition, circuits[1:], length, max);
+  newPartitions := findPartitions(partition[:], circuits[1:], length, max);
   partitions = append(partitions, newPartitions...);
   return partitions;
 }

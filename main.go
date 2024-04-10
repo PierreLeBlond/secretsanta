@@ -4,6 +4,8 @@ import (
   "fmt"
   "sort"
   "os"
+  "time"
+  "math/rand"
   "container/list"
   "github.com/PierreLeBlond/secretsanta/internal/io"
   "github.com/PierreLeBlond/secretsanta/internal/configuration"
@@ -61,6 +63,11 @@ func main() {
   }
 
   fmt.Printf("Found %d partition !", len(partitions));
+
+  rand.Seed(time.Now().UnixNano());
+  rand.Shuffle(len(partitions), func(i, j int) {
+    partitions[i], partitions[j] = partitions[j], partitions[i]
+  });
 
   var partition []*list.List;
 

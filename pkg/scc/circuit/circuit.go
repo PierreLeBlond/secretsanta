@@ -58,7 +58,7 @@ func hasDoublon(circuit *list.List) bool {
   return false;
 }
 
-func getCircuits(component *graph.Graph, elementaryPath *list.List, startNode string, currentNode string, debug string) (bool, []*list.List) {
+func getCircuits(component *graph.Graph, elementaryPath *list.List, startNode string, currentNode string) (bool, []*list.List) {
   var circuits []*list.List;
 
   f := false;
@@ -68,13 +68,12 @@ func getCircuits(component *graph.Graph, elementaryPath *list.List, startNode st
   newElementaryPath.PushBack(currentNode);
 
   component.BlockedNodes[currentNode] = true;
-  debug += " -> block " + currentNode;
   for _, otherNode := range component.Edges[currentNode] {
     if otherNode == startNode {
       circuits = append(circuits, newElementaryPath);
       f = true;
     } else if !component.BlockedNodes[otherNode] {
-      success, newCircuits := getCircuits(component, newElementaryPath, startNode, otherNode, debug);
+      success, newCircuits := getCircuits(component, newElementaryPath, startNode, otherNode);
       f = success;
       circuits = append(circuits, newCircuits...);
     }
@@ -102,7 +101,7 @@ func GetCircuits(graph *graph.Graph) ([]*list.List) {
       nodeElement = getNodeElement(graph, component.Nodes.Front().Value.(string));
       node := nodeElement.Value.(string);
 
-      _, newCircuits := getCircuits(component, list.New(), node, node, "");
+      _, newCircuits := getCircuits(component, list.New(), node, node);
       circuits = append(circuits, newCircuits...);
 
       nodeElement = nodeElement.Next();

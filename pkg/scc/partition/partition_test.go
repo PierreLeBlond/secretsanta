@@ -51,25 +51,33 @@ func TestFindPartitions(t *testing.T) {
   mainGraph.Nodes.PushBack("e");
   mainGraph.Nodes.PushBack("f");
 
-  mainGraph.Edges["a"] = append(mainGraph.Edges["a"], "b");
-  mainGraph.Edges["b"] = append(mainGraph.Edges["b"], "c");
-  mainGraph.Edges["c"] = append(mainGraph.Edges["c"], "a");
-
-  mainGraph.Edges["d"] = append(mainGraph.Edges["d"], "e");
-  mainGraph.Edges["e"] = append(mainGraph.Edges["e"], "f");
-  mainGraph.Edges["f"] = append(mainGraph.Edges["f"], "d");
-
-  partitions := FindPartitions(mainGraph);
+  var circuits []*list.List;
 
   firstExpectedCircuit := list.New();
   firstExpectedCircuit.PushBack("a");
   firstExpectedCircuit.PushBack("b");
   firstExpectedCircuit.PushBack("c");
+  circuits = append(circuits, firstExpectedCircuit);
 
   secondExpectedCircuit := list.New();
   secondExpectedCircuit.PushBack("d");
   secondExpectedCircuit.PushBack("e");
   secondExpectedCircuit.PushBack("f");
+  circuits = append(circuits, secondExpectedCircuit);
+
+  thirdCircuit := list.New();
+  thirdCircuit.PushBack("d");
+  thirdCircuit.PushBack("f");
+  circuits = append(circuits, thirdCircuit);
+
+  fourthCircuit := list.New();
+  fourthCircuit.PushBack("c");
+  fourthCircuit.PushBack("d");
+  fourthCircuit.PushBack("e");
+  fourthCircuit.PushBack("f");
+  circuits = append(circuits, fourthCircuit);
+
+  partitions := FindPartitions(mainGraph, circuits);
 
   expectedPartition := []*list.List{firstExpectedCircuit, secondExpectedCircuit};
 
